@@ -25,6 +25,18 @@ router.get("/", (req, res) => {
     );
 });
 
+// This must be placed *after* the `GET "/"` route
+router.get("/:id", (req, res) => {
+  Vendor.findById(req.params.id)
+    .then((vendor) => {
+      if (!vendor) return res.status(404).json({ error: "Vendor not found" });
+      res.json(vendor);
+    })
+    .catch((err) =>
+      res.status(500).json({ error: "Fetch error", details: err.message })
+    );
+});
+
 // Update vendor
 router.put("/:id", (req, res) => {
   Vendor.findByIdAndUpdate(req.params.id, req.body, { new: true })

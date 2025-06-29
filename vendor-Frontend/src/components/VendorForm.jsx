@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 export default function VendorForm({ onSubmit, initialValues = {} }) {
   const formik = useFormik({
+    enableReinitialize: true, // Allows form to reset with new initial values
     initialValues: {
       name: initialValues.name || "",
       email: initialValues.email || "",

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchUser, updateVendor } from "../api";
 import VendorForm from "../components/VendorForm";
+import api from "../api"; // ensure correct path
 
 export default function EditVendor() {
   const { id } = useParams(); // instead of match.params.id
@@ -9,10 +10,16 @@ export default function EditVendor() {
   const [initial, setInitial] = useState(null);
 
   useEffect(() => {
-    fetchUser(); // make sure user is logged in
-    fetch(`/vendors/${id}`)
-      .then((res) => res.json())
-      .then(setInitial);
+    fetchUser(); // ensure you're logged in
+    api
+      .get(`/vendors/${id}`)
+      .then((res) => setInitial(res.data))
+      .catch((err) => {
+        console.error(
+          "Error loading vendor:",
+          err.response?.data || err.message
+        );
+      });
   }, [id]);
 
   return initial ? (
