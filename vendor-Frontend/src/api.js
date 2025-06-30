@@ -1,17 +1,17 @@
-import dotenv from "dotenv";
-dotenv.config();
 import axios from "axios";
 
 console.log(
   "API URL:",
-  process.env.REACT_APP_API_URL || "http://localhost:5000"
+  import.meta.env.VITE_API_URL || "https://vendorapp-task.onrender.com"
 );
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000",
+  baseURL:
+    import.meta.env.VITE_API_URL || "https://vendorapp-task.onrender.com",
   withCredentials: true,
 });
 
 export const fetchUser = () => api.get("/auth/user");
+
 export const loginGoogle = () =>
   (window.location = `${api.defaults.baseURL}/auth/google`);
 export const logout = () => api.get("/auth/logout");
