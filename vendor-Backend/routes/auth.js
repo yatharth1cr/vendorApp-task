@@ -11,15 +11,16 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173/dashboard",
-    failureRedirect: "http://localhost:5173",
+    successRedirect:
+      `${process.env.CLIENT_URL}/dashboard` || "http://localhost:5173",
+    failureRedirect: process.env.CLIENT_URL || "http://localhost:5173",
   })
 );
 
 // Logout user
 router.get("/logout", (req, res) => {
   req.logout(function () {
-    res.redirect("http://localhost:5173");
+    res.redirect(process.env.CLIENT_URL || "http://localhost:5173");
   });
 });
 
